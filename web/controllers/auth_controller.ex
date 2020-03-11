@@ -8,11 +8,25 @@ defmodule Discuss.AuthController do
         user_params = %{
             token: auth.credentials.token,
             email: auth.info.email,
-            provider: auth.provider
+            provider: Atom.to_string(auth.provider)
         }
         changeset = User.changeset(%User{}, user_params)
 
-        get_or_insert_user(changeset)
+        signin(conn, changeset)
+    end
+
+    defp signin(conn, changeset) do
+      case get_or_insert_user(changeset) do
+        {:ok, user} -> 
+          conn
+          |> put_flash(:info, "Welcome back!")
+          |> put_session(:user_id, user.id)
+          |> redirect(to: topic_path(conn, :index))
+        {:error, _reason} -> 
+          conn
+          |> put_flash(:error, "Error signing in")
+          |> redirect(to: topic_path(conn, :index))
+      end
     end
 
     defp get_or_insert_user(changeset) do
