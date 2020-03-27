@@ -59,4 +59,9 @@ channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })
   .receive("error", resp => { console.log("Unable to join", resp) })
 
+// todo сделать нормально через импорты, без этих глобал вэльюс
+document.querySelector('button').addEventListener('click', () => {
+  channel.push('comment:hello', { hey: 'ooh' });
+})
+
 export default socket
