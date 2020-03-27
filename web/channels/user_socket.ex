@@ -3,6 +3,7 @@ defmodule Discuss.UserSocket do
 
   ## Channels
   # channel "room:*", Discuss.RoomChannel
+  channel "comments:*", Discuss.CommentsChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
