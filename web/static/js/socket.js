@@ -52,16 +52,12 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 // from connect if you don't care about authentication.
 
 socket.connect()
+const createSocket = (topic_id) => {
+  let channel = socket.channel(`comments:${topic_id}`, {})
+  channel.join()
+    .receive("ok", resp => { console.log("Joined successfully", resp) })
+    .receive("error", resp => { console.log("Unable to join", resp) })
+}
 
-// Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("comments:1", {})
-channel.join()
-  .receive("ok", resp => { console.log("Joined successfully", resp) })
-  .receive("error", resp => { console.log("Unable to join", resp) })
-
-// todo сделать нормально через импорты, без этих глобал вэльюс
-document.querySelector('button').addEventListener('click', () => {
-  channel.push('comment:hello', { hey: 'ooh' });
-})
-
-export default socket
+// todo сделать нормально через импорт
+window.createSocket = createSocket;
