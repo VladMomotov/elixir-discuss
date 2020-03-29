@@ -57,6 +57,13 @@ const createSocket = (topic_id) => {
   channel.join()
     .receive("ok", resp => { console.log("Joined successfully", resp) })
     .receive("error", resp => { console.log("Unable to join", resp) })
+
+  //todo сделать нормально
+  document.querySelector('button').addEventListener('click', () => {
+    const content = document.querySelector('textarea').value;
+
+    channel.push('comment:add', {content: content });
+  });
 }
 
 // todo сделать нормально через импорт
