@@ -20,7 +20,8 @@ defmodule Discuss.UserSocket do
   #
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
-  def connect(_params, socket) do
+  def connect(%{"token" => token}, socket) do
+    IO.puts token
     {:ok, socket}
   end
 
