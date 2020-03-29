@@ -55,8 +55,10 @@ socket.connect()
 const createSocket = (topic_id) => {
   let channel = socket.channel(`comments:${topic_id}`, {})
   channel.join()
-    .receive("ok", resp => { console.log("Joined successfully", resp) })
+    .receive("ok", ({comments}) => { renderComments(comments) })
     .receive("error", resp => { console.log("Unable to join", resp) })
+
+  channel.on(`comments:${topic_id}:new`, ({comment}) => renderComment(comment));
 
   //todo сделать нормально
   document.querySelector('button').addEventListener('click', () => {
@@ -66,5 +68,23 @@ const createSocket = (topic_id) => {
   });
 }
 
-// todo сделать нормально через импорт
+const renderComments = (comments) => {
+  const renderedComments = comments.map(commentTemplate);
+
+  //todo сделать нормально
+  document.querySelector('.collection').innerHTML = renderedComments.join('');
+};
+
+const renderComment = (comment) => {
+  const renderedComment = commentTemplate(comment);
+
+  document.querySelector('.collection').innerHTML += renderedComment;
+};
+
+const commentTemplate = (comment) => `
+  <li class="collection-item">
+    ${comment.content}
+  </li>
+`;
+
 window.createSocket = createSocket;
