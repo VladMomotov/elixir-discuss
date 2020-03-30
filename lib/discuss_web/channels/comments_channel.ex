@@ -1,12 +1,10 @@
 defmodule DiscussWeb.CommentsChannel do
   use DiscussWeb, :channel
-  alias Discuss.{Topic, Comment}
+  alias Discuss.Posting
 
   def join("comments:" <> topic_id, _auth_msg, socket) do
     topic_id = String.to_integer topic_id
-    topic = Topic
-      |> Repo.get(topic_id)
-      |> Repo.preload(comments: [:user])
+    topic = Posting.get_topic!(topic_id)
 
     {:ok, %{comments: topic.comments}, assign(socket, :topic, topic)}
   end
@@ -18,10 +16,12 @@ defmodule DiscussWeb.CommentsChannel do
     # todo check how to set multiple relations in latest Phoenix
     changeset = topic
       |> build_assoc(:comments, user_id: user_id)
-      |> Comment.changeset(%{content: content})
+      |> Posting.Comment.changeset(%{content: content})
 
     case Repo.insert(changeset) do
       {:ok, comment} ->
+        comment = comment |> Repo.preload(:user)
+
         broadcast! socket,
                    "comments:#{socket.assigns.topic.id}:new",
                    %{comment: comment}
