@@ -6,16 +6,18 @@ defmodule Discuss.CommentsChannel do
     topic_id = String.to_integer topic_id
     topic = Topic
       |> Repo.get(topic_id)
-      |> Repo.preload(:comments)
+      |> Repo.preload(comments: [:user])
 
     {:ok, %{comments: topic.comments}, assign(socket, :topic, topic)}
   end
 
   def handle_in(_event, %{"content" => content}, socket) do
     topic = socket.assigns.topic
+    user_id = socket.assigns.user_id
 
+    # todo check how to set multiple relations in latest Phoenix
     changeset = topic
-      |> build_assoc(:comments)
+      |> build_assoc(:comments, user_id: user_id)
       |> Comment.changeset(%{content: content})
 
     case Repo.insert(changeset) do

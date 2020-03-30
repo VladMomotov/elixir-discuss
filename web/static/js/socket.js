@@ -81,10 +81,17 @@ const renderComment = (comment) => {
   document.querySelector('.collection').innerHTML += renderedComment;
 };
 
-const commentTemplate = (comment) => `
-  <li class="collection-item">
-    ${comment.content}
-  </li>
-`;
+const commentTemplate = (comment) => {
+  let email = (comment.user || {}).email || 'Anonymous';
+
+  return `
+    <li class="collection-item">
+      ${comment.content}
+      <div class="secondary-content">
+        ${email}
+      </div>
+    </li>
+  `;
+}
 
 window.createSocket = createSocket;
