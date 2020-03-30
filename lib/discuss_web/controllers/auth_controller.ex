@@ -2,7 +2,7 @@ defmodule DiscussWeb.AuthController do
     use DiscussWeb, :controller
     plug Ueberauth
 
-    alias Discuss.User
+    alias Discuss.Account.User
 
     def callback(%{assigns: %{ueberauth_auth: auth}} = conn, params) do
         user_params = %{
