@@ -1,3 +1,3 @@
 defmodule Discuss.LayoutViewTest do
-  use Discuss.ConnCase, async: true
+  use DiscussWeb.ConnCase, async: true
 end

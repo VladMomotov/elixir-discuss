@@ -1,4 +1,4 @@
-defmodule Discuss.ErrorHelpers do
+defmodule DiscussWeb.ErrorHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """
@@ -32,9 +32,9 @@ defmodule Discuss.ErrorHelpers do
     #     dgettext "errors", "is invalid"
     #
     if count = opts[:count] do
-      Gettext.dngettext(Discuss.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(DiscussWeb.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(Discuss.Gettext, "errors", msg, opts)
+      Gettext.dgettext(DiscussWeb.Gettext, "errors", msg, opts)
     end
   end
 end

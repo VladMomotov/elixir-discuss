@@ -1,5 +1,5 @@
-defmodule Discuss.AuthController do
-    use Discuss.Web, :controller
+defmodule DiscussWeb.AuthController do
+    use DiscussWeb, :controller
     plug Ueberauth
 
     alias Discuss.User
@@ -23,12 +23,12 @@ defmodule Discuss.AuthController do
 
     defp signin(conn, changeset) do
       case get_or_insert_user(changeset) do
-        {:ok, user} -> 
+        {:ok, user} ->
           conn
           |> put_flash(:info, "Welcome back!")
           |> put_session(:user_id, user.id)
           |> redirect(to: topic_path(conn, :index))
-        {:error, _reason} -> 
+        {:error, _reason} ->
           conn
           |> put_flash(:error, "Error signing in")
           |> redirect(to: topic_path(conn, :index))
@@ -37,10 +37,10 @@ defmodule Discuss.AuthController do
 
     defp get_or_insert_user(changeset) do
       case Repo.get_by(User, email: changeset.changes.email) do
-        nil -> 
+        nil ->
           Repo.insert(changeset)
-        user -> 
-          {:ok, user}  
+        user ->
+          {:ok, user}
       end
     end
 end

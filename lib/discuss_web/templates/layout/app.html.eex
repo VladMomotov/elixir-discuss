@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script>
       <%= if @conn.assigns.user do %>
-        window.userToken = "<%= Phoenix.Token.sign(Discuss.Endpoint, "key", @conn.assigns.user.id) %>"
+        window.userToken = "<%= Phoenix.Token.sign(DiscussWeb.Endpoint, "key", @conn.assigns.user.id) %>"
       <% end %>
     </script>
   </head>

@@ -1,5 +1,5 @@
-defmodule Discuss.ErrorView do
-  use Discuss.Web, :view
+defmodule DiscussWeb.ErrorView do
+  use DiscussWeb, :view
 
   def render("404.html", _assigns) do
     "Page not found"

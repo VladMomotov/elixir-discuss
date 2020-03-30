@@ -1,5 +1,5 @@
-defmodule Discuss.TopicController do
-  use Discuss.Web, :controller
+defmodule DiscussWeb.TopicController do
+  use DiscussWeb, :controller
 
   alias Discuss.Topic
 
@@ -13,7 +13,7 @@ defmodule Discuss.TopicController do
 
   def show(conn, %{"id" => topic_id}) do
     topic = Repo.get!(Topic, topic_id)
-    render conn, "show.html", topic: topic  
+    render conn, "show.html", topic: topic
   end
 
   def new(conn, _params) do

@@ -27,7 +27,7 @@ defmodule Discuss.ChannelCase do
 
 
       # The default endpoint for testing
-      @endpoint Discuss.Endpoint
+      @endpoint DiscussWeb.Endpoint
     end
   end
 

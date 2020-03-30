@@ -1,7 +1,7 @@
-defmodule Discuss.Endpoint do
+defmodule DiscussWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :discuss
 
-  socket "/socket", Discuss.UserSocket
+  socket "/socket", DiscussWeb.UserSocket
 
   # Serve at "/" the static files from "priv/static" directory.
   #
@@ -38,5 +38,5 @@ defmodule Discuss.Endpoint do
     key: "_discuss_key",
     signing_salt: "MpaR881j"
 
-  plug Discuss.Router
+  plug DiscussWeb.Router
 end

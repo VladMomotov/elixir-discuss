@@ -1,5 +1,5 @@
 defmodule Discuss.Comment do
-  use Discuss.Web, :model
+  use DiscussWeb, :model
 
   @derive {Poison.Encoder, only: [:content, :user]}
 
