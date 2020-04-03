@@ -79,5 +79,5 @@ jobs:
         with:
           GIGALIXIR_USERNAME: ${{ secrets.GIGALIXIR_USERNAME }}
           GIGALIXIR_PASSWORD: ${{ secrets.GIGALIXIR_PASSWORD }}
-          GIGALIXIR_APP: discuss
+          GIGALIXIR_APP: violet-arid-australiankelpie
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
