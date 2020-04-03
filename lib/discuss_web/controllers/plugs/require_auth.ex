@@ -4,7 +4,8 @@ defmodule Discuss.Plugs.RequireAuth do
 
   alias DiscussWeb.Router.Helpers, as: Routes
 
-  def init(_params) do; end
+  def init(_params) do
+  end
 
   def call(conn, _params) do
     if conn.assigns[:user] do

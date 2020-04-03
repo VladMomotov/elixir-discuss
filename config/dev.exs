@@ -21,7 +21,6 @@ config :discuss, DiscussWeb.Endpoint,
     ]
   ]
 
-
 # Watch static and templates for browser reloading.
 config :discuss, DiscussWeb.Endpoint,
   live_reload: [
@@ -49,5 +48,4 @@ config :discuss, Discuss.Repo,
   hostname: "localhost",
   pool_size: 10
 
-
-  import_config "dev.secret.exs"
+import_config "dev.secret.exs"

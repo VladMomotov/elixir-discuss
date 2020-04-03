@@ -11,7 +11,7 @@ defmodule Discuss.Application do
       # Start the Ecto repository
       supervisor(Discuss.Repo, []),
       # Start the endpoint when the application starts
-      supervisor(DiscussWeb.Endpoint, []),
+      supervisor(DiscussWeb.Endpoint, [])
       # Start your own worker by calling: Discuss.Worker.start_link(arg1, arg2, arg3)
       # worker(Discuss.Worker, [arg1, arg2, arg3]),
     ]

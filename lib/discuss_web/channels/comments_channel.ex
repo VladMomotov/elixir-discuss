@@ -4,7 +4,7 @@ defmodule DiscussWeb.CommentsChannel do
   alias DiscussWeb.CommentView
 
   def join("comments:" <> topic_id, _auth_msg, socket) do
-    topic_id = String.to_integer topic_id
+    topic_id = String.to_integer(topic_id)
     topic = Posting.get_topic!(topic_id)
     view = CommentView.render("index.json", data: topic.comments)
 
@@ -16,7 +16,8 @@ defmodule DiscussWeb.CommentsChannel do
     user_id = socket.assigns.user_id
 
     # todo check how to set multiple relations in latest Phoenix
-    changeset = topic
+    changeset =
+      topic
       |> build_assoc(:comments, user_id: user_id)
       |> Posting.Comment.changeset(%{content: content})
 
@@ -25,11 +26,14 @@ defmodule DiscussWeb.CommentsChannel do
         comment = comment |> Repo.preload(:user)
         view = CommentView.render("show.json", data: comment)
 
-        broadcast! socket,
-                   "comments:#{socket.assigns.topic.id}:new",
-                   %{comment: view}
+        broadcast!(
+          socket,
+          "comments:#{socket.assigns.topic.id}:new",
+          %{comment: view}
+        )
 
         {:reply, :ok, socket}
+
       {:error, _reason} ->
         {:reply, {:error, %{errors: changeset}}, socket}
     end

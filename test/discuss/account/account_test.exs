@@ -7,7 +7,11 @@ defmodule Discuss.AccountTest do
     alias Discuss.Account.User
 
     @valid_attrs %{email: "some email", provider: "some provider", token: "some token"}
-    @update_attrs %{email: "some updated email", provider: "some updated provider", token: "some updated token"}
+    @update_attrs %{
+      email: "some updated email",
+      provider: "some updated provider",
+      token: "some updated token"
+    }
     @invalid_attrs %{email: nil, provider: nil, token: nil}
 
     def user_fixture(attrs \\ %{}) do

@@ -15,7 +15,8 @@ defmodule DiscussWeb.Router do
   end
 
   scope "/", DiscussWeb do
-    pipe_through :browser # Use the default browser stack
+    # Use the default browser stack
+    pipe_through :browser
 
     resources "/topics", TopicController
     get "/", TopicController, :index
@@ -23,7 +24,6 @@ defmodule DiscussWeb.Router do
 
   scope "/auth", DiscussWeb do
     pipe_through :browser
-
 
     get "/signout", AuthController, :signout
 
