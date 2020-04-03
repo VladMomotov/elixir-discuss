@@ -8,7 +8,7 @@ defmodule DiscussWeb.TopicController do
   plug :check_topic_owner when action in [:update, :edit, :delete]
 
   def index(conn, _params) do
-    topics = Posting.list_topics
+    topics = Posting.list_topics()
     render(conn, "index.html", topics: topics)
   end
 
@@ -63,7 +63,7 @@ defmodule DiscussWeb.TopicController do
   end
 
   def delete(conn, %{"id" => topic_id}) do
-    Posting.get_topic!(topic_id) |> Posting.delete_topic
+    Posting.get_topic!(topic_id) |> Posting.delete_topic()
 
     conn
     |> put_flash(:info, "Topic Deleted")
