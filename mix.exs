@@ -45,17 +45,16 @@ defmodule Discuss.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.4.0"},
-      {:phoenix_pubsub, "~> 1.0"},
-      {:ecto_sql, "~> 3.0"},
+      {:phoenix, "~> 1.4.14"},
+      {:phoenix_pubsub, "~> 1.1"},
+      {:ecto_sql, "~> 3.1"},
       {:phoenix_ecto, "~> 4.0"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_html, "~> 2.6"},
-      {:phoenix_live_reload, "~> 1.0", only: :dev},
+      {:phoenix_html, "~> 2.11"},
+      {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:gettext, "~> 0.11"},
       {:ueberauth, "~> 0.6.3"},
       {:ueberauth_github, "~> 0.8.0"},
-      {:plug, "~> 1.7"},
       {:plug_cowboy, "~> 2.0"},
       {:jason, "~> 1.0"}
     ]
