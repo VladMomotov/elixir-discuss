@@ -8,7 +8,7 @@
     <meta name="author" content="">
 
     <title>Hello Discuss!</title>
-    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script>
@@ -27,11 +27,11 @@
         <ul class="right">
           <%= if @conn.assigns[:user] do %>
             <li>
-              <%= link 'Logout', to: auth_path(@conn, :signout) %>
+              <%= link 'Logout', to: Routes.auth_path(@conn, :signout) %>
             </li>
           <% else %>
             <li>
-              <%= link 'Sign in with GitHub', to: auth_path(@conn, :request, "github") %>
+              <%= link 'Sign in with GitHub', to: Routes.auth_path(@conn, :request, "github") %>
             </li>
           <% end %>
         </ul>
@@ -47,6 +47,6 @@
       </main>
 
     </div> <!-- /container -->
-    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+    <script src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>

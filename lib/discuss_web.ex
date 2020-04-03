@@ -24,7 +24,7 @@ defmodule DiscussWeb do
       import Ecto
       import Ecto.Query
 
-      import DiscussWeb.Router.Helpers
+      alias DiscussWeb.Router.Helpers, as: Routes
       import DiscussWeb.Gettext
     end
   end
@@ -40,7 +40,7 @@ defmodule DiscussWeb do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      import DiscussWeb.Router.Helpers
+      alias DiscussWeb.Router.Helpers, as: Routes
       import DiscussWeb.ErrorHelpers
       import DiscussWeb.Gettext
     end

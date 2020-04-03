@@ -31,7 +31,7 @@ defmodule DiscussWeb.TopicController do
       {:ok, _topic} ->
         conn
         |> put_flash(:info, "Topic Created")
-        |> redirect(to: topic_path(conn, :index))
+        |> redirect(to: Routes.topic_path(conn, :index))
       {:error, changeset} ->
         render conn, "new.html", changeset: changeset
     end
@@ -53,7 +53,7 @@ defmodule DiscussWeb.TopicController do
       {:ok, _topic} ->
         conn
         |> put_flash(:info, "Topic Updated")
-        |> redirect(to: topic_path(conn, :index))
+        |> redirect(to: Routes.topic_path(conn, :index))
       {:error, changeset} ->
         render conn, "edit.html", changeset: changeset, topic: old_topic
     end
@@ -64,7 +64,7 @@ defmodule DiscussWeb.TopicController do
 
     conn
     |> put_flash(:info, "Topic Deleted")
-    |> redirect(to: topic_path(conn, :index))
+    |> redirect(to: Routes.topic_path(conn, :index))
   end
 
   def check_topic_owner(conn, _params) do
@@ -75,7 +75,7 @@ defmodule DiscussWeb.TopicController do
     else
       conn
       |> put_flash(:error, "You cannot edit that")
-      |> redirect(to: topic_path(conn, :index))
+      |> redirect(to: Routes.topic_path(conn, :index))
       |> halt()
     end
   end
