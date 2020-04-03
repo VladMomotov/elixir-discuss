@@ -4,11 +4,10 @@ defmodule Discuss.Mixfile do
   def project do
     [
       app: :discuss,
-      version: "0.0.1",
+      version: "0.0.3",
       elixir: "~> 1.9",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
-      build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
@@ -21,18 +20,7 @@ defmodule Discuss.Mixfile do
   def application do
     [
       mod: {Discuss.Application, []},
-      applications: [
-        :phoenix,
-        :phoenix_pubsub,
-        :phoenix_html,
-        :cowboy,
-        :logger,
-        :gettext,
-        :phoenix_ecto,
-        :postgrex,
-        :ueberauth,
-        :ueberauth_github
-      ]
+      extra_applications: [:logger, :runtime_tools]
     ]
   end
 
