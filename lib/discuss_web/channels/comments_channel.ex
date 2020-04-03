@@ -5,7 +5,7 @@ defmodule DiscussWeb.CommentsChannel do
 
   def join("comments:" <> topic_id, _auth_msg, socket) do
     topic_id = String.to_integer(topic_id)
-    topic = Posting.get_topic!(topic_id)
+    topic = Posting.get_topic_with_comments!(topic_id)
     view = CommentView.render("index.json", data: topic.comments)
 
     {:ok, %{comments: view}, assign(socket, :topic, topic)}

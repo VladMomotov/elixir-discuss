@@ -38,6 +38,11 @@ defmodule Discuss.Posting do
   def get_topic!(id) do
     Topic
     |> Repo.get!(id)
+  end
+
+  def get_topic_with_comments!(id) do
+    Topic
+    |> Repo.get!(id)
     |> Repo.preload(comments: [:user])
   end
 

@@ -2,27 +2,29 @@ defmodule DiscussWeb.TopicController do
   use DiscussWeb, :controller
 
   alias Discuss.Posting.Topic
+  alias Discuss.Posting
 
   plug Discuss.Plugs.RequireAuth when action in [:new, :create, :edit, :update, :delete]
   plug :check_topic_owner when action in [:update, :edit, :delete]
 
   def index(conn, _params) do
-    topics = Repo.all(Topic)
+    topics = Posting.list_topics
     render(conn, "index.html", topics: topics)
   end
 
   def show(conn, %{"id" => topic_id}) do
-    topic = Repo.get!(Topic, topic_id)
+    topic = Posting.get_topic!(topic_id)
     render(conn, "show.html", topic: topic)
   end
 
   def new(conn, _params) do
-    changeset = Topic.changeset(%Topic{}, %{})
+    changeset = Posting.change_topic(%Topic{})
 
     render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"topic" => topic}) do
+    # todo разобраться с ассоциациями
     changeset =
       conn.assigns.user
       |> build_assoc(:topics)
@@ -40,17 +42,16 @@ defmodule DiscussWeb.TopicController do
   end
 
   def edit(conn, %{"id" => topic_id}) do
-    topic = Repo.get(Topic, topic_id)
-    changeset = Topic.changeset(topic)
+    topic = Posting.get_topic!(topic_id)
+    changeset = Posting.change_topic(topic)
 
     render(conn, "edit.html", changeset: changeset, topic: topic)
   end
 
   def update(conn, %{"id" => topic_id, "topic" => topic}) do
-    old_topic = Repo.get(Topic, topic_id)
-    changeset = Topic.changeset(old_topic, topic)
+    old_topic = Posting.get_topic!(topic_id)
 
-    case Repo.update(changeset) do
+    case Posting.update_topic(old_topic, topic) do
       {:ok, _topic} ->
         conn
         |> put_flash(:info, "Topic Updated")
@@ -62,7 +63,7 @@ defmodule DiscussWeb.TopicController do
   end
 
   def delete(conn, %{"id" => topic_id}) do
-    Repo.get!(Topic, topic_id) |> Repo.delete!()
+    Posting.get_topic!(topic_id) |> Posting.delete_topic
 
     conn
     |> put_flash(:info, "Topic Deleted")
@@ -72,7 +73,7 @@ defmodule DiscussWeb.TopicController do
   def check_topic_owner(conn, _params) do
     %{params: %{"id" => topic_id}} = conn
 
-    if Repo.get(Topic, topic_id).user_id == conn.assigns.user.id do
+    if Posting.get_topic!(topic_id).user_id == conn.assigns.user.id do
       conn
     else
       conn
