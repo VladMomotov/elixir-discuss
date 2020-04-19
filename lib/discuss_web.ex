@@ -60,6 +60,7 @@ defmodule DiscussWeb do
       alias Discuss.Repo
       import Ecto
       import Ecto.Query
+      import Ecto.Changeset
       import DiscussWeb.Gettext
     end
   end

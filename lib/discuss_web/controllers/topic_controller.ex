@@ -24,7 +24,6 @@ defmodule DiscussWeb.TopicController do
   end
 
   def create(conn, %{"topic" => topic}) do
-    # todo разобраться с ассоциациями
     changeset =
       conn.assigns.user
       |> build_assoc(:topics)
