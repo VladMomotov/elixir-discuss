@@ -10,6 +10,12 @@ defmodule Discuss.Posting.Comment do
     timestamps()
   end
 
+  defimpl Jason.Encoder, for: Discuss.Posting.Comment do
+    def encode(value, opts) do
+      Jason.Encode.map(Map.take(value, [:content]), opts)
+    end
+  end
+
   @doc false
   def changeset(comment, attrs) do
     comment

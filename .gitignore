@@ -24,3 +24,5 @@ erl_crash.dump
 # variables.
 /config/*.secret.exs
 !/config/prod.secret.exs
+
+gcp_creds.json

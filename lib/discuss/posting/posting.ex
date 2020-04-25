@@ -21,6 +21,11 @@ defmodule Discuss.Posting do
     Repo.all(Topic)
   end
 
+  def list_topics_with_comments do
+    Repo.all from t in Topic,
+              preload: :comments
+  end
+
   @doc """
   Gets a single topic.
 
