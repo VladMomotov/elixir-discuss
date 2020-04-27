@@ -1,10 +1,11 @@
+import { Socket } from 'phoenix'
+import JobsChannel from './jobsChannel'
+
 // NOTE: The contents of this file will only be executed if
 // you uncomment its entry in "web/static/js/app.js".
 
 // To use Phoenix channels, the first step is to import Socket
 // and connect at the socket path in "lib/my_app/endpoint.ex":
-import {Socket} from "phoenix"
-
 let socket = new Socket("/socket", {params: {token: window.userToken}})
 
 // When you connect, you'll often need to authenticate the client.
@@ -95,3 +96,4 @@ const commentTemplate = (comment) => {
 }
 
 window.createSocket = createSocket;
+window.jobsChannel = new JobsChannel(socket);

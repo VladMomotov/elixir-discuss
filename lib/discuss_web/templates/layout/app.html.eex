@@ -27,6 +27,32 @@
         <ul class="right">
           <%= if @conn.assigns[:user] do %>
             <li>
+              <a
+                href="javascript:void(0);"
+                id="export-posts"
+              >
+                Export posts
+              </a>
+              <script>
+                const element = document.querySelector("#export-posts");
+                element.onclick = function(event) {
+                  window.jobsChannel.joinExportToStorage(status => {
+                    switch(status) {
+                      case "working":
+                        element.innerHTML = "Exporting posts...";
+                        break;
+                      case "finished":
+                        element.innerHTML = "Posts exported ✔️";
+                        break;
+                      case "failed":
+                        element.innerHTML = "Failed to export posts ❌";
+                        break;
+                    }
+                  })
+                }
+              </script>
+            </li>
+            <li>
               <%= link 'Logout', to: Routes.auth_path(@conn, :signout) %>
             </li>
           <% else %>
