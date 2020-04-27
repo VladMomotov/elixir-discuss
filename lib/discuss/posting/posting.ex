@@ -22,8 +22,11 @@ defmodule Discuss.Posting do
   end
 
   def list_topics_with_comments do
-    Repo.all from t in Topic,
-              preload: :comments
+    query =
+      from t in Topic,
+        preload: :comments
+
+    Repo.all(query)
   end
 
   @doc """

@@ -13,7 +13,7 @@ defmodule DiscussWeb.CommentsChannel do
 
   def handle_in(_event, %{"content" => content}, socket) do
     topic = socket.assigns.topic
-    user = Account.get_user! socket.assigns.user_id
+    user = Account.get_user!(socket.assigns.user_id)
 
     changeset =
       topic

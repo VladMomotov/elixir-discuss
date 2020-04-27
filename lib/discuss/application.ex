@@ -13,7 +13,7 @@ defmodule Discuss.Application do
       # Start your own worker by calling: Discuss.Worker.start_link(arg1, arg2, arg3)
       # worker(Discuss.Worker, [arg1, arg2, arg3]),
       {Registry, keys: :unique, name: Registry.JobsRegistry},
-      DiscussJobs.Superviser,
+      DiscussJobs.Superviser
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

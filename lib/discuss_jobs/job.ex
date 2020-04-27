@@ -7,18 +7,22 @@ defmodule DiscussJobs.Job do
       @behaviour unquote(__MODULE__)
 
       def start_link({job_id, payload}) do
-        case GenServer.start_link __MODULE__, job_id, name: {:via, Registry, {Registry.JobsRegistry, job_id}} do
+        case GenServer.start_link(__MODULE__, job_id,
+               name: {:via, Registry, {Registry.JobsRegistry, job_id}}
+             ) do
           {:ok, pid} ->
-            GenServer.cast pid, {:perform, payload}
+            GenServer.cast(pid, {:perform, payload})
             {:ok, pid}
-          {:error, reason} -> {:error, reason}
+
+          {:error, reason} ->
+            {:error, reason}
         end
       end
 
       def start_job(payload \\ nil) do
-        job_id = Ecto.UUID.generate
+        job_id = Ecto.UUID.generate()
 
-        DiscussJobs.Superviser.start_child __MODULE__, {job_id, payload}
+        DiscussJobs.Superviser.start_child(__MODULE__, {job_id, payload})
       end
 
       @impl true

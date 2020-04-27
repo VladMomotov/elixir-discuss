@@ -9,7 +9,7 @@ defmodule DiscussJobs.ExportToStorage do
     topics = Posting.list_topics_with_comments()
 
     for topic <- topics do
-      export_topic topic
+      export_topic(topic)
     end
 
     {:stop, :normal, :ok}
@@ -21,9 +21,9 @@ defmodule DiscussJobs.ExportToStorage do
     # when GoogleApi switchs to Jason we can easily remove Jason.encode & Jason.decode
 
     topic
-    |> Jason.encode
+    |> Jason.encode()
     |> elem(1)
-    |> Jason.decode
+    |> Jason.decode()
     |> elem(1)
     |> export_json("#{topic.id}.json")
   end
@@ -33,6 +33,13 @@ defmodule DiscussJobs.ExportToStorage do
     conn = GoogleApi.Storage.V1.Connection.new(token.token)
 
     object = %GoogleApi.Storage.V1.Model.Object{name: name, contentType: "application/json"}
-    GoogleApi.Storage.V1.Api.Objects.storage_objects_insert_iodata(conn, @storage_bucket, "multipart", object, json)
+
+    GoogleApi.Storage.V1.Api.Objects.storage_objects_insert_iodata(
+      conn,
+      @storage_bucket,
+      "multipart",
+      object,
+      json
+    )
   end
 end
