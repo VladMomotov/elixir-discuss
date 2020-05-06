@@ -10,10 +10,7 @@ defmodule Discuss.Application do
       Discuss.Repo,
       # Start the endpoint when the application starts
       DiscussWeb.Endpoint,
-      # Start your own worker by calling: Discuss.Worker.start_link(arg1, arg2, arg3)
-      # worker(Discuss.Worker, [arg1, arg2, arg3]),
-      {Registry, keys: :unique, name: Registry.JobsRegistry},
-      DiscussJobs.Superviser
+      DiscussExport.Supervisor
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

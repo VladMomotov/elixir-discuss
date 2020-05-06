@@ -1,16 +1,16 @@
 defmodule DiscussWeb.JobsChannel do
   use DiscussWeb, :channel
-  alias DiscussJobs.ExportToStorage
+  alias DiscussExport.OnDemandWorkerSupervisor
   alias DiscussWeb.Endpoint
 
-  def join("jobs:export_to_storage", payload, socket) do
+  def join("jobs:export_to_storage", _payload, socket) do
     self_pid = self()
 
     callback_fn = fn job_id, status ->
       GenServer.cast(self_pid, {:status_update, job_id, status})
     end
 
-    {:ok, job_id} = ExportToStorage.start_job(payload, callback_fn)
+    {:ok, job_id} = OnDemandWorkerSupervisor.start_worker(callback_fn)
     {:ok, %{job_id: job_id}, socket}
   end
 
