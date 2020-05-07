@@ -34,4 +34,5 @@ config :ueberauth, Ueberauth,
   ]
 
 config :discuss, DiscussExport,
-  worker_frequency: 1000 * 60 # 1 minute
+  # 1 minute
+  worker_frequency: 1000 * 60

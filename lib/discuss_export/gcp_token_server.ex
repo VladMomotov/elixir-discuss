@@ -8,7 +8,8 @@ defmodule DiscussExport.GCPTokenServer do
   end
 
   def get_token do
-    GenServer.call(__MODULE__, :get, 20000) # retrieving new token can take some time
+    # retrieving new token can take some time
+    GenServer.call(__MODULE__, :get, 20000)
   end
 
   # Server
@@ -44,7 +45,7 @@ defmodule DiscussExport.GCPTokenServer do
   end
 
   defp schedule_update(expiration_datetime) do
-    unix_now = DateTime.utc_now |> DateTime.to_unix
+    unix_now = DateTime.utc_now() |> DateTime.to_unix()
     delay = (expiration_datetime - unix_now) * 1000
 
     IO.puts("token will be updated in #{delay / 1000} seconds")

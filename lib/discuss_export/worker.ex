@@ -7,7 +7,8 @@ defmodule DiscussExport.Worker do
   def perform do
     IO.puts("starting export")
 
-    Process.sleep(3000) # simulate load
+    # simulate load
+    Process.sleep(3000)
 
     topics = Posting.list_topics_with_comments()
 
