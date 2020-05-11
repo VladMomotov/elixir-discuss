@@ -44,7 +44,9 @@ defmodule Discuss.Mixfile do
       {:ueberauth, "~> 0.6.3"},
       {:ueberauth_github, "~> 0.8.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:jason, "~> 1.0"}
+      {:jason, "~> 1.0"},
+      {:google_api_storage, "~> 0.19.0"},
+      {:goth, "~> 1.2"}
     ]
   end
 

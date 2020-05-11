@@ -32,3 +32,7 @@ config :ueberauth, Ueberauth,
   providers: [
     github: {Ueberauth.Strategy.Github, [default_scope: "user,public_repo"]}
   ]
+
+config :discuss, DiscussExport,
+  # 1 minute
+  worker_frequency: 1000 * 60

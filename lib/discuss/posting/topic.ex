@@ -8,6 +8,12 @@ defmodule Discuss.Posting.Topic do
     has_many(:comments, Discuss.Posting.Comment)
   end
 
+  defimpl Jason.Encoder, for: Discuss.Posting.Topic do
+    def encode(value, opts) do
+      Jason.Encode.map(Map.take(value, [:title, :comments]), opts)
+    end
+  end
+
   @doc false
   def changeset(topic, attrs) do
     topic
