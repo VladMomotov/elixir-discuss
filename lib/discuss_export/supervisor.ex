@@ -12,8 +12,7 @@ defmodule DiscussExport.Supervisor do
     children = [
       GCPTokenServer,
       {Task.Supervisor, name: DiscussExport.WorkerSupervisor},
-      {WorkerScheduler, Application.get_env(:discuss, DiscussExport)[:worker_frequency]},
-      {Task.Supervisor, name: DiscussExport.OnDemandWorkerSupervisor}
+      {WorkerScheduler, Application.get_env(:discuss, DiscussExport)[:worker_frequency]}
     ]
 
     Supervisor.init(children, strategy: :one_for_one)

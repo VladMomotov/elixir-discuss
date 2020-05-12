@@ -10,6 +10,7 @@ defmodule Discuss.Application do
       Discuss.Repo,
       # Start the endpoint when the application starts
       DiscussWeb.Endpoint,
+      {Task.Supervisor, name: DiscussWeb.JobsSupervisor},
       DiscussExport.Supervisor
     ]
 
