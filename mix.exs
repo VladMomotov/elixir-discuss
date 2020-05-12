@@ -46,7 +46,8 @@ defmodule Discuss.Mixfile do
       {:plug_cowboy, "~> 2.0"},
       {:jason, "~> 1.0"},
       {:google_api_storage, "~> 0.19.0"},
-      {:goth, "~> 1.2"}
+      {:goth, "~> 1.2"},
+      {:mox, "~> 0.5", only: :test}
     ]
   end
 
@@ -60,7 +61,7 @@ defmodule Discuss.Mixfile do
     [
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate", "test"]
+      test: ["ecto.create --quiet", "ecto.migrate", "test --no-start"]
     ]
   end
 end

@@ -38,7 +38,7 @@ defmodule DiscussExport.GCPTokenServer do
 
   defp retrieve_token do
     IO.puts("retrieving token")
-    {:ok, token} = Goth.Token.for_scope("https://www.googleapis.com/auth/cloud-platform")
+    {:ok, token} = gcp_api().get_token()
     schedule_update(token.expires)
 
     token
@@ -51,5 +51,9 @@ defmodule DiscussExport.GCPTokenServer do
     IO.puts("token will be updated in #{delay / 1000} seconds")
 
     Process.send_after(self(), :update, delay)
+  end
+
+  defp gcp_api do
+    Application.get_env(:discuss, :gcp_api)
   end
 end
