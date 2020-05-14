@@ -21,10 +21,11 @@ defmodule DiscussExport.WorkerTest do
   test "perform", %{token: token, connection: connection, object: object, json: json} do
     GCPTokenServerMock
     |> expect(:get_token, fn -> token end)
+
     GCP.ApiMock
     |> expect(:get_connection, fn :test_token -> connection end)
     |> expect(:build_object, fn _map -> object end)
-    |> expect(:insert_object, fn ^connection, _, ^object, ^json  -> nil end)
+    |> expect(:insert_object, fn ^connection, _, ^object, ^json -> nil end)
 
     Worker.perform()
   end

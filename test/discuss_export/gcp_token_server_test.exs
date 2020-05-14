@@ -23,7 +23,6 @@ defmodule DiscussExport.GCPTokenServerTest do
       {:ok, _pid} = GCPTokenServer.start_link(nil)
       allow(GCP.ApiMock, self(), GCPTokenServer)
 
-
       first_token = GCPTokenServer.get_token()
       second_token = GCPTokenServer.get_token()
 
@@ -44,10 +43,9 @@ defmodule DiscussExport.GCPTokenServerTest do
     end
   end
 
-
   defp one_hour_later do
     DateTime.utc_now()
-    |> DateTime.add(60*60, :second)
+    |> DateTime.add(60 * 60, :second)
     |> DateTime.to_unix()
   end
 

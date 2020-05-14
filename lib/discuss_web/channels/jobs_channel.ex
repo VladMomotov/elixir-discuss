@@ -17,10 +17,10 @@ defmodule DiscussWeb.JobsChannel do
     {:noreply, socket}
   end
 
-
   defp start_job(worker) do
     self_pid = self()
     worker_id = Ecto.UUID.generate()
+
     on_status_change = fn status ->
       GenServer.cast(self_pid, {:status_update, worker_id, status})
     end
