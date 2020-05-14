@@ -1,5 +1,5 @@
 defmodule DiscussExport.WorkerTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case
   alias DiscussExport.Worker
 
   import Mox
