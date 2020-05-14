@@ -48,6 +48,7 @@ config :discuss, Discuss.Repo,
   hostname: "localhost",
   pool_size: 10
 
-config :discuss, :gcp_api, GCP.Api
+config :discuss_export, :gcp_api, GCP.Api
+config :discuss_export, :token_server, DiscussExport.GCPTokenServer
 
 import_config "dev.secret.exs"

@@ -18,7 +18,8 @@ config :discuss, DiscussWeb.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
-config :discuss, :gcp_api, GCP.Api
+config :discuss_export, :gcp_api, GCP.Api
+config :discuss_export, :token_server, DiscussExport.GCPTokenServer
 
 # ## SSL Support
 #
