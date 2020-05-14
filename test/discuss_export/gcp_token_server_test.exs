@@ -47,13 +47,13 @@ defmodule DiscussExport.GCPTokenServerTest do
 
   defp one_hour_later do
     DateTime.utc_now()
-    |> DateTime.add(60*60, :seconds)
+    |> DateTime.add(60*60, :second)
     |> DateTime.to_unix()
   end
 
   defp one_second_later do
     DateTime.utc_now()
-    |> DateTime.add(1, :seconds)
+    |> DateTime.add(1, :second)
     |> DateTime.to_unix()
   end
 end
