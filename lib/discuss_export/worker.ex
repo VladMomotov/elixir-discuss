@@ -3,8 +3,8 @@ defmodule DiscussExport.Worker do
   alias Discuss.Posting
 
   @storage_bucket "posting_export"
-  @gcp_api Application.get_env(:discuss_export, :gcp_api)
-  @token_server Application.get_env(:discuss_export, :token_server)
+  @gcp_api Application.get_env(:discuss, :discuss_export)[:gcp_api]
+  @token_server Application.get_env(:discuss, :discuss_export)[:token_server]
 
   def perform do
     IO.puts("starting export")

@@ -2,7 +2,7 @@ defmodule DiscussExport.GCPTokenServer do
   use GenServer
   @behaviour DiscussExport.GCPTokenServer.Behaviour
 
-  @gcp_api Application.get_env(:discuss_export, :gcp_api)
+  @gcp_api Application.get_env(:discuss, :discuss_export)[:gcp_api]
 
   # Client
 
