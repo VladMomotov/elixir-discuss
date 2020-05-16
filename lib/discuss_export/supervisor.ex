@@ -9,12 +9,15 @@ defmodule DiscussExport.Supervisor do
 
   @impl true
   def init(_init_arg) do
+    # Scheduler depends on WorkerSupervisor
+    # each worker under WorkerSupervisor depends on GCPTokenServer
+
     children = [
       GCPTokenServer,
       {Task.Supervisor, name: DiscussExport.WorkerSupervisor},
       {WorkerScheduler, Application.get_env(:discuss, DiscussExport)[:worker_frequency]}
     ]
 
-    Supervisor.init(children, strategy: :one_for_one)
+    Supervisor.init(children, strategy: :rest_for_one)
   end
 end
