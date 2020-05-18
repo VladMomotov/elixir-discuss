@@ -1,4 +1,8 @@
 defmodule Discuss.Posting.Topic do
+  @moduledoc """
+    Topic model.
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
 

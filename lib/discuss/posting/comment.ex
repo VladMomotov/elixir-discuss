@@ -1,4 +1,8 @@
 defmodule Discuss.Posting.Comment do
+  @moduledoc """
+    Comment model.
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
 

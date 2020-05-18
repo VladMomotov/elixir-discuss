@@ -1,6 +1,10 @@
 defmodule DiscussExport.Worker do
-  alias DiscussExport.GCPTokenServer
+  @moduledoc """
+    Export topic & comments worker.
+  """
+
   alias Discuss.Posting
+  alias DiscussExport.GCPTokenServer
 
   @storage_bucket "posting_export"
 

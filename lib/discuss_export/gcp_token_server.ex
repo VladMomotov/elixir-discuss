@@ -1,4 +1,8 @@
 defmodule DiscussExport.GCPTokenServer do
+  @moduledoc """
+    GenServer that handles Google Cloud Platform tokens.
+  """
+
   use GenServer
 
   # Client
@@ -9,7 +13,7 @@ defmodule DiscussExport.GCPTokenServer do
 
   def get_token do
     # retrieving new token can take some time
-    GenServer.call(__MODULE__, :get, 20000)
+    GenServer.call(__MODULE__, :get, 20_000)
   end
 
   # Server

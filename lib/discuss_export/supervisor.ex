@@ -1,4 +1,8 @@
 defmodule DiscussExport.Supervisor do
+  @moduledoc """
+    Main supervisor of DiscussExport.
+  """
+
   use Supervisor
   alias DiscussExport.{GCPTokenServer, WorkerScheduler}
 

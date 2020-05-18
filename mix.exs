@@ -46,7 +46,8 @@ defmodule Discuss.Mixfile do
       {:plug_cowboy, "~> 2.0"},
       {:jason, "~> 1.0"},
       {:google_api_storage, "~> 0.19.0"},
-      {:goth, "~> 1.2"}
+      {:goth, "~> 1.2"},
+      {:credo, "~> 1.4", only: [:dev, :test], runtime: false}
     ]
   end
 

@@ -1,6 +1,10 @@
 defmodule DiscussWeb.CommentsChannel do
+  @moduledoc """
+    Websocket channel for creating & fetching comments.
+  """
+
   use DiscussWeb, :channel
-  alias Discuss.{Posting, Account}
+  alias Discuss.{Account, Posting}
   alias DiscussWeb.CommentView
 
   def join("comments:" <> topic_id, _auth_msg, socket) do

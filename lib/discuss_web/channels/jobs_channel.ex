@@ -1,4 +1,8 @@
 defmodule DiscussWeb.JobsChannel do
+  @moduledoc """
+    Websocket channel for handling jobs runs & statuses.
+  """
+
   use DiscussWeb, :channel
   alias DiscussExport.Worker
   alias DiscussWeb.Endpoint
@@ -16,7 +20,6 @@ defmodule DiscussWeb.JobsChannel do
     Endpoint.broadcast!("jobs:id:" <> job_id, "status_update", %{status: status})
     {:noreply, socket}
   end
-
 
   defp start_job(worker) do
     self_pid = self()
