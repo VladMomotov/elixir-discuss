@@ -34,17 +34,17 @@ defmodule DiscussExport.Worker do
   end
 
   defp export_json(json, name) do
-    token = GCPTokenServer.get_token()
-    conn = GoogleApi.Storage.V1.Connection.new(token.token)
+    with token <- GCPTokenServer.get_token(),
+         conn <- GoogleApi.Storage.V1.Connection.new(token.token) do
+      object = %GoogleApi.Storage.V1.Model.Object{name: name, contentType: "application/json"}
 
-    object = %GoogleApi.Storage.V1.Model.Object{name: name, contentType: "application/json"}
-
-    GoogleApi.Storage.V1.Api.Objects.storage_objects_insert_iodata(
-      conn,
-      @storage_bucket,
-      "multipart",
-      object,
-      json
-    )
+      GoogleApi.Storage.V1.Api.Objects.storage_objects_insert_iodata(
+        conn,
+        @storage_bucket,
+        "multipart",
+        object,
+        json
+      )
+    end
   end
 end
