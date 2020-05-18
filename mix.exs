@@ -47,7 +47,8 @@ defmodule Discuss.Mixfile do
       {:jason, "~> 1.0"},
       {:google_api_storage, "~> 0.19.0"},
       {:goth, "~> 1.2"},
-      {:credo, "~> 1.4", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false}
     ]
   end
 

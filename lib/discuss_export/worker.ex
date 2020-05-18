@@ -14,11 +14,8 @@ defmodule DiscussExport.Worker do
     # simulate load
     Process.sleep(3000)
 
-    topics = Posting.list_topics_with_comments()
-
-    for topic <- topics do
-      export_topic(topic)
-    end
+    Posting.list_topics_with_comments()
+    |> Enum.each(&export_topic/1)
 
     IO.puts("finishing export")
   end
