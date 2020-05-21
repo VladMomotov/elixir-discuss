@@ -20,3 +20,7 @@ config :discuss, Discuss.Repo,
 
 config :goth,
   disabled: true
+
+config :discuss, :discuss_export,
+  gcp_api: GCP.ApiMock,
+  token_server: GCPTokenServerMock

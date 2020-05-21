@@ -4,13 +4,18 @@ defmodule DiscussExport.GCPTokenServer do
   """
 
   use GenServer
+  @behaviour DiscussExport.GCPTokenServer.Behaviour
+
+  @gcp_api Application.get_env(:discuss, :discuss_export)[:gcp_api]
 
   # Client
 
+  @impl true
   def start_link(init_arg) do
     GenServer.start_link(__MODULE__, init_arg, name: __MODULE__)
   end
 
+  @impl true
   def get_token do
     # retrieving new token can take some time
     GenServer.call(__MODULE__, :get, 20_000)
@@ -42,7 +47,7 @@ defmodule DiscussExport.GCPTokenServer do
 
   defp retrieve_token do
     IO.puts("retrieving token")
-    {:ok, token} = Goth.Token.for_scope("https://www.googleapis.com/auth/cloud-platform")
+    {:ok, token} = @gcp_api.get_token()
     schedule_update(token.expires)
 
     token

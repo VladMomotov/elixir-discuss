@@ -18,6 +18,10 @@ config :discuss, DiscussWeb.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
+config :discuss, :discuss_export,
+  gcp_api: GCP.Api,
+  token_server: DiscussExport.GCPTokenServer
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

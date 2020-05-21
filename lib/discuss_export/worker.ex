@@ -7,6 +7,8 @@ defmodule DiscussExport.Worker do
   alias DiscussExport.GCPTokenServer
 
   @storage_bucket "posting_export"
+  @gcp_api Application.get_env(:discuss, :discuss_export)[:gcp_api]
+  @token_server Application.get_env(:discuss, :discuss_export)[:token_server]
 
   def perform do
     IO.puts("starting export")
@@ -34,17 +36,11 @@ defmodule DiscussExport.Worker do
   end
 
   defp export_json(json, name) do
-    with token <- GCPTokenServer.get_token(),
-         conn <- GoogleApi.Storage.V1.Connection.new(token.token) do
-      object = %GoogleApi.Storage.V1.Model.Object{name: name, contentType: "application/json"}
+    with token <- @token_server.get_token(),
+         conn <- @gcp_api.get_connection(token.token) do
+      object = @gcp_api.build_object(%{name: name, contentType: "application/json"})
 
-      GoogleApi.Storage.V1.Api.Objects.storage_objects_insert_iodata(
-        conn,
-        @storage_bucket,
-        "multipart",
-        object,
-        json
-      )
+      @gcp_api.insert_object(conn, @storage_bucket, object, json)
     end
   end
 end
