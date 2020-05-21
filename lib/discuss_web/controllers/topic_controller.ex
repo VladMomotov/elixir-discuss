@@ -1,8 +1,8 @@
 defmodule DiscussWeb.TopicController do
   use DiscussWeb, :controller
 
-  alias Discuss.Posting.Topic
   alias Discuss.Posting
+  alias Discuss.Posting.Topic
 
   plug Discuss.Plugs.RequireAuth when action in [:new, :create, :edit, :update, :delete]
   plug :check_topic_owner when action in [:update, :edit, :delete]

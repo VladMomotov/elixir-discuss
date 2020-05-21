@@ -1,6 +1,10 @@
 defmodule DiscussExport.WorkerScheduler do
+  @moduledoc """
+    Worker scheduler.
+  """
+
   use GenServer
-  alias DiscussExport.{Worker}
+  alias DiscussExport.Worker
 
   def start_link(init_arg) do
     GenServer.start_link(__MODULE__, init_arg, name: __MODULE__)

@@ -1,4 +1,8 @@
 defmodule DiscussWeb.JobsChannel do
+  @moduledoc """
+    Websocket channel for handling jobs runs & statuses.
+  """
+
   use DiscussWeb, :channel
   alias DiscussExport.Worker
   alias DiscussWeb.Endpoint

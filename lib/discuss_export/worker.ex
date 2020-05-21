@@ -1,6 +1,10 @@
 defmodule DiscussExport.Worker do
-  alias DiscussExport.GCPTokenServer
+  @moduledoc """
+    Export topic & comments worker.
+  """
+
   alias Discuss.Posting
+  alias DiscussExport.GCPTokenServer
 
   @storage_bucket "posting_export"
   @gcp_api Application.get_env(:discuss, :discuss_export)[:gcp_api]
@@ -12,11 +16,8 @@ defmodule DiscussExport.Worker do
     # simulate load
     Process.sleep(3000)
 
-    topics = Posting.list_topics_with_comments()
-
-    for topic <- topics do
-      export_topic(topic)
-    end
+    Posting.list_topics_with_comments()
+    |> Enum.each(&export_topic/1)
 
     IO.puts("finishing export")
   end
@@ -35,10 +36,11 @@ defmodule DiscussExport.Worker do
   end
 
   defp export_json(json, name) do
-    token = @token_server.get_token()
-    conn = @gcp_api.get_connection(token.token)
+    with token <- @token_server.get_token(),
+         conn <- @gcp_api.get_connection(token.token) do
+      object = @gcp_api.build_object(%{name: name, contentType: "application/json"})
 
-    object = @gcp_api.build_object(%{name: name, contentType: "application/json"})
-    @gcp_api.insert_object(conn, @storage_bucket, object, json)
+      @gcp_api.insert_object(conn, @storage_bucket, object, json)
+    end
   end
 end

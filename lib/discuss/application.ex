@@ -1,4 +1,8 @@
 defmodule Discuss.Application do
+  @moduledoc """
+    OTP Application
+  """
+
   use Application
 
   # See http://elixir-lang.org/docs/stable/elixir/Application.html

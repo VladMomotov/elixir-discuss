@@ -1,4 +1,8 @@
 defmodule Discuss.Account.User do
+  @moduledoc """
+    User model.
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
 

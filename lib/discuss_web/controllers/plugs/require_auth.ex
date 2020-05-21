@@ -1,4 +1,8 @@
 defmodule Discuss.Plugs.RequireAuth do
+  @moduledoc """
+    Plug for routes authentication.
+  """
+
   import Plug.Conn
   import Phoenix.Controller
 
