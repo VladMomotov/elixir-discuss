@@ -16,6 +16,8 @@ defmodule DiscussWeb.Plugs.SetUser do
     user_id = get_session(conn, :user_id)
 
     if user = user_id && Repo.get(User, user_id) do
+      user = Repo.preload(user, :assistant_chat)
+
       assign(conn, :user, user)
     else
       assign(conn, :user, nil)
