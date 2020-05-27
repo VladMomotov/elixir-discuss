@@ -1,49 +1,26 @@
-<h5>Latest assistant messages</h5>
-
-<ul
-  class="collection"
-  id="assistant-chat--messages"
+<div
+  class="assistant-chat"
+  data-controller="assistant-chat"
+  data-assistant-chat-chat-id="<%= @chat.id %>"
 >
-</ul>
+  <h5>Latest assistant messages</h5>
 
-<form
-  onsubmit="javascript:void(0);"
-  id="assistant-chat--new-message-form"
->
-  <div class="form-group">
-    <label>New message</label>
-    <input
-      id="assistant-chat--new-message-input"
-    />
-  </div>
+  <ul
+    class="collection"
+    data-target="assistant-chat.collection"
+  >
+  </ul>
 
-  <input type="submit" />
-</form>
+  <form
+    data-action="assistant-chat#submit"
+  >
+    <div class="form-group">
+      <label>New message</label>
+      <input
+        data-target="assistant-chat.input"
+       />
+    </div>
 
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const submitForm = $("#assistant-chat--new-message-form");
-    const messageInput = $("#assistant-chat--new-message-input")[0];
-    const messageCollection = $("#assistant-chat--messages");
-
-    const appendMessage = (message) => {
-      const isCurrentUserSender = message.sender_id === <%= @conn.assigns.user.id %>;
-
-      messageCollection.append(`
-        <li class="collection-item ${isCurrentUserSender ? 'right-align' : 'left-align'}">
-          <span>${message.content}</span>
-        </li>
-      `)
-    }
-
-    submitForm.submit(function(event) {
-      event.preventDefault();
-
-      window.assistantChatChannel.sendMessage(messageInput.value);
-    })
-
-    window.assistantChatChannel.join(<%= (@chat.id) || "null" %>, appendMessage);
-  })
-
-
-</script>
+    <input type="submit" />
+  </form>
+</div>

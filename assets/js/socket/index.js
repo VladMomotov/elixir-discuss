@@ -98,4 +98,4 @@ const commentTemplate = (comment) => {
 
 window.createSocket = createSocket;
 window.jobsChannel = new JobsChannel(socket);
-window.assistantChatChannel = new AssistantChatChannel(socket);
+window.assistantChatChannel = new AssistantChatChannel(socket, window.userId);

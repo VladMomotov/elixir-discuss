@@ -1,13 +1,25 @@
 export default class AssistantChatChannel {
-  constructor(socket) { 
+  constructor(socket, currentUserId) { 
     this.socket = socket;
     this.channel = null;
+    this.currentUserId = currentUserId;
   }
 
-  join(chatId, appendMessage) {
+  join(chatId, {onAppend, onMessageViewed}) {
     const channel = this.socket.channel(`assistant_chat:${chatId}`, {});
 
-    const appendExistingMessages = messages => messages.forEach(appendMessage)
+    const markMessageAsRead = (message) => {
+      channel.push(`assistant_chat:message_viewed:${message.id}`);
+    }
+
+    const displayMessage = (message) => {
+      onAppend(message);
+      if (!message.was_viewed && message.sender_id !== this.currentUserId) {
+        markMessageAsRead(message);
+      }
+    }
+
+    const appendExistingMessages = messages => messages.forEach(displayMessage)
 
     channel
       .join()
@@ -15,7 +27,10 @@ export default class AssistantChatChannel {
       .receive("error", res => { console.log("Unabale to join", releaseEvents) });
 
     channel
-      .on("assistant_chat:new_message", (message) => appendMessage(message));
+      .on("assistant_chat:new_message", displayMessage);
+
+    channel
+      .on("assistant_chat:message_viewed", onMessageViewed);
 
     this.channel = channel;
   }

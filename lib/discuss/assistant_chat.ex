@@ -28,8 +28,9 @@ defmodule Discuss.AssistantChat do
     Repo.all(
       from m in Message,
       where: m.chat_id == ^chat.id,
+      order_by: [desc: :inserted_at],
       limit: 20
-    )
+    ) |> Enum.reverse()
   end
 
   @doc """

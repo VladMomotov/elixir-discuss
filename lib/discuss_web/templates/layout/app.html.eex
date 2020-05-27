@@ -14,6 +14,7 @@
     <script>
       <%= if @conn.assigns.user do %>
         window.userToken = "<%= Phoenix.Token.sign(DiscussWeb.Endpoint, "key", @conn.assigns.user.id) %>"
+        window.userId = <%= @conn.assigns.user.id %>
       <% end %>
     </script>
   </head>
