@@ -1,7 +1,7 @@
 <ul>
   <%= for chat <- @chats do %>
     <li>
-      <%= link "creator: #{chat.creator.id}", to: Routes.assistant_chat_path(@conn, :show, chat.id) %>
+      <%= link "chat with #{chat.creator.email}", to: Routes.assistant_chat_path(@conn, :show, chat.id) %>
     </li>
   <% end %>
 </ul>
