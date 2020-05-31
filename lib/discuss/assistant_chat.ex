@@ -33,6 +33,12 @@ defmodule Discuss.AssistantChat do
     ) |> Enum.reverse()
   end
 
+  def list_assistant_chat_messages_query(chat) do
+    from m in Message,
+      where: m.chat_id == ^chat.id,
+      order_by: [desc: :inserted_at, desc: :id]
+  end
+
   @doc """
   Gets a single message.
 

@@ -5,17 +5,16 @@ export default class AssistantChatChannel {
     this.currentUserId = currentUserId;
   }
 
-  join(chatId, {onAppend, onMessageViewed}) {
-    const channel = this.socket.channel(`assistant_chat:${chatId}`, {});
+  join(chatId, {onAppend, onMessageViewed, onNoMoreMessages, onPrepend}) {
+    this.onPrepend = onPrepend;
+    this.onNoMoreMessages = onNoMoreMessages;
 
-    const markMessageAsRead = (message) => {
-      channel.push(`assistant_chat:message_viewed:${message.id}`);
-    }
+    const channel = this.socket.channel(`assistant_chat:${chatId}`, {});
 
     const displayMessage = (message) => {
       onAppend(message);
       if (!message.was_viewed && message.sender_id !== this.currentUserId) {
-        markMessageAsRead(message);
+        this.markMessageAsRead(message);
       }
     }
 
@@ -23,8 +22,13 @@ export default class AssistantChatChannel {
 
     channel
       .join()
-      .receive("ok", ({messages}) => { appendExistingMessages(messages) })
-      .receive("error", res => { console.log("Unabale to join", releaseEvents) });
+      .receive("ok", ({messages, no_more_messages}) => { 
+        appendExistingMessages(messages);
+        if (no_more_messages) {
+          onNoMoreMessages();
+        }
+      })
+      .receive("error", res => { console.log("Unabale to join", res) });
 
     channel
       .on("assistant_chat:new_message", displayMessage);
@@ -41,5 +45,30 @@ export default class AssistantChatChannel {
     }
 
     this.channel.push("assistant_chat:new_message", {content: message})
+  }
+
+  markMessageAsRead = (message) => {
+    this.channel.push(`assistant_chat:message_viewed:${message.id}`);
+  }
+
+  loadMoreMessages() {
+    if (!this.channel) { 
+      throw new Error('Channel is not initiated yet.')
+    }
+
+    this.channel.push("assistant_chat:load_more_messages", {})
+      .receive("ok", ({messages, no_more_messages}) => {
+        this.onPrepend(messages);
+
+        messages.forEach(message => {
+          if (!message.was_viewed && message.sender_id !== this.currentUserId) {
+            this.markMessageAsRead(message);
+          }
+        });
+
+        if (no_more_messages) {
+          this.onNoMoreMessages();
+        }
+      })
   }
 }

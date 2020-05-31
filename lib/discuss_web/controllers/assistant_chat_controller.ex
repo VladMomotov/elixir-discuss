@@ -31,11 +31,19 @@ defmodule DiscussWeb.AssistantChatController do
     end
   end
 
-  def create(conn, _params) do
-    chat =
-      Account.get_user!(conn.assigns.user_id)
-      |> AssistantChat.create_chat()
+  # when there is no id in route - treat as default user's chat
+  def show(conn, %{}) do
+    user = conn.assigns.user
+    chat = user.assistant_chat
 
-    render(conn, "show.html", chat: chat, messages: [])
+    chat =
+      if chat == nil do
+        {:ok, chat} = AssistantChat.create_chat(user)
+        chat
+      else
+        chat
+      end
+
+    render conn, "show.html", chat: chat
   end
 end

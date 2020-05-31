@@ -57,11 +57,7 @@
               <%= if @conn.assigns[:user].is_admin do %>
                 <%= link 'Assistant chats', to: Routes.assistant_chat_path(@conn, :index) %>
               <% else %>
-                <%= if @conn.assigns[:user].assistant_chat do %>
-                  <%= link 'Assistant chat', to: Routes.assistant_chat_path(@conn, :show, @conn.assigns[:user].assistant_chat.id) %>
-                <% else %>
-                  <%= link 'Assistant chat', to: Routes.assistant_chat_path(@conn, :create) %>
-                <% end %>
+                <%= link 'Assistant chat', to: "/assistant_chat" %>
               <% end %>
             </li>
             <li>

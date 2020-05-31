@@ -9,10 +9,19 @@ defmodule DiscussWeb.AssistantChatChannel do
 
   def join("assistant_chat:" <> chat_id, _auth_msg, socket) do
     with chat <- AssistantChat.get_chat!(chat_id),
-         user <- Account.get_user!(socket.assigns.user_id),
-         messages <- AssistantChat.list_last_assistant_chat_messages(chat) do
+         user <- Account.get_user!(socket.assigns.user_id) do
           if AssistantChat.is_chat_member?(chat, user) do
-            {:ok, %{chat_id: chat.id, messages: messages}, assign(socket, :chat, chat)}
+            messages_paginator = first_page(chat)
+
+            messages = messages_paginator.entries |> Enum.reverse()
+
+            no_more_messages = messages_paginator.metadata.after == nil
+
+            socket = socket
+                      |> assign(:chat, chat)
+                      |> assign(:messages_paginator, messages_paginator)
+
+            {:ok, %{chat_id: chat.id, messages: messages, no_more_messages: no_more_messages}, socket}
           end
     end
   end
@@ -38,4 +47,37 @@ defmodule DiscussWeb.AssistantChatChannel do
           end
     end
   end
+
+  def handle_in("assistant_chat:load_more_messages", _params, socket) do
+    messages_paginator = next_page(socket.assigns.messages_paginator, socket.assigns.chat)
+    messages = messages_paginator.entries |> Enum.reverse()
+
+    no_more_messages = messages_paginator.metadata.after == nil
+
+    socket = assign(socket, :messages_paginator, messages_paginator)
+    {:reply, {:ok, %{messages: messages, no_more_messages: no_more_messages}}, socket}
+  end
+
+  defp take_out_messages(socket, paginator) do
+    messages = paginator.entries |> Enum.reverse()
+
+    if paginator.metadata.after == nil do
+      push(socket, "assistant_chat:no_more_messages", %{})
+    end
+
+    messages
+  end
+
+  defp first_page(chat) do
+    AssistantChat.list_assistant_chat_messages_query(chat)
+    |> Discuss.Repo.paginate(cursor_fields: [{:inserted_at, :desc}, {:id, :desc}], limit: 2, include_total_count: true)
+  end
+
+  defp next_page(paginator, chat) do
+    cursor_after = paginator.metadata.after
+
+    AssistantChat.list_assistant_chat_messages_query(chat)
+    |> Discuss.Repo.paginate(cursor_fields: [{:inserted_at, :desc}, {:id, :desc}], limit: 2, after: cursor_after, include_total_count: true)
+  end
+
 end
