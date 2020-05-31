@@ -27,10 +27,11 @@ defmodule Discuss.AssistantChat do
   def list_last_assistant_chat_messages(chat) do
     Repo.all(
       from m in Message,
-      where: m.chat_id == ^chat.id,
-      order_by: [desc: :inserted_at],
-      limit: 20
-    ) |> Enum.reverse()
+        where: m.chat_id == ^chat.id,
+        order_by: [desc: :inserted_at],
+        limit: 20
+    )
+    |> Enum.reverse()
   end
 
   def list_assistant_chat_messages_query(chat) do

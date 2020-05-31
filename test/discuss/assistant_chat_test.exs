@@ -7,7 +7,12 @@ defmodule Discuss.AssistantChatTest do
     alias Discuss.AssistantChat.Message
 
     @valid_attrs %{content: "some content", receiver_id: 42, sender_id: 42, was_viewed: true}
-    @update_attrs %{content: "some updated content", receiver_id: 43, sender_id: 43, was_viewed: false}
+    @update_attrs %{
+      content: "some updated content",
+      receiver_id: 43,
+      sender_id: 43,
+      was_viewed: false
+    }
     @invalid_attrs %{content: nil, receiver_id: nil, sender_id: nil, was_viewed: nil}
 
     def message_fixture(attrs \\ %{}) do

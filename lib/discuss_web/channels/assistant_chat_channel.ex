@@ -10,19 +10,20 @@ defmodule DiscussWeb.AssistantChatChannel do
   def join("assistant_chat:" <> chat_id, _auth_msg, socket) do
     with chat <- AssistantChat.get_chat!(chat_id),
          user <- Account.get_user!(socket.assigns.user_id) do
-          if AssistantChat.is_chat_member?(chat, user) do
-            messages_paginator = first_page(chat)
+      if AssistantChat.is_chat_member?(chat, user) do
+        messages_paginator = first_page(chat)
 
-            messages = messages_paginator.entries |> Enum.reverse()
+        messages = messages_paginator.entries |> Enum.reverse()
 
-            no_more_messages = messages_paginator.metadata.after == nil
+        no_more_messages = messages_paginator.metadata.after == nil
 
-            socket = socket
-                      |> assign(:chat, chat)
-                      |> assign(:messages_paginator, messages_paginator)
+        socket =
+          socket
+          |> assign(:chat, chat)
+          |> assign(:messages_paginator, messages_paginator)
 
-            {:ok, %{chat_id: chat.id, messages: messages, no_more_messages: no_more_messages}, socket}
-          end
+        {:ok, %{chat_id: chat.id, messages: messages, no_more_messages: no_more_messages}, socket}
+      end
     end
   end
 
@@ -40,11 +41,11 @@ defmodule DiscussWeb.AssistantChatChannel do
   def handle_in("assistant_chat:message_viewed:" <> message_id, _params, socket) do
     with chat <- socket.assigns.chat,
          message <- AssistantChat.get_message!(message_id) do
-          if message.chat_id === chat.id do
-            AssistantChat.update_message(message, %{was_viewed: true})
-            broadcast!(socket, "assistant_chat:message_viewed", message)
-            {:noreply, socket}
-          end
+      if message.chat_id === chat.id do
+        AssistantChat.update_message(message, %{was_viewed: true})
+        broadcast!(socket, "assistant_chat:message_viewed", message)
+        {:noreply, socket}
+      end
     end
   end
 
@@ -70,14 +71,22 @@ defmodule DiscussWeb.AssistantChatChannel do
 
   defp first_page(chat) do
     AssistantChat.list_assistant_chat_messages_query(chat)
-    |> Discuss.Repo.paginate(cursor_fields: [{:inserted_at, :desc}, {:id, :desc}], limit: 2, include_total_count: true)
+    |> Discuss.Repo.paginate(
+      cursor_fields: [{:inserted_at, :desc}, {:id, :desc}],
+      limit: 2,
+      include_total_count: true
+    )
   end
 
   defp next_page(paginator, chat) do
     cursor_after = paginator.metadata.after
 
     AssistantChat.list_assistant_chat_messages_query(chat)
-    |> Discuss.Repo.paginate(cursor_fields: [{:inserted_at, :desc}, {:id, :desc}], limit: 2, after: cursor_after, include_total_count: true)
+    |> Discuss.Repo.paginate(
+      cursor_fields: [{:inserted_at, :desc}, {:id, :desc}],
+      limit: 2,
+      after: cursor_after,
+      include_total_count: true
+    )
   end
-
 end

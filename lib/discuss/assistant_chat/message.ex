@@ -3,9 +3,9 @@ defmodule Discuss.AssistantChat.Message do
   import Ecto.Changeset
 
   schema "assistant_chat_messages" do
-    field :content, :string
-    field :receiver_id, :integer
-    field :was_viewed, :boolean, default: false
+    field(:content, :string)
+    field(:receiver_id, :integer)
+    field(:was_viewed, :boolean, default: false)
     belongs_to(:sender, Discuss.Account.User)
     belongs_to(:chat, Discuss.AssistantChat.Chat)
 

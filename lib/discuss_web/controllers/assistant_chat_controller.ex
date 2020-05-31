@@ -21,6 +21,7 @@ defmodule DiscussWeb.AssistantChatController do
 
   def show(conn, %{"id" => chat_id}) do
     chat = AssistantChat.get_chat!(chat_id)
+
     if AssistantChat.is_chat_member?(chat, conn.assigns.user) do
       render(conn, "show.html", chat: chat)
     else
@@ -44,6 +45,6 @@ defmodule DiscussWeb.AssistantChatController do
         chat
       end
 
-    render conn, "show.html", chat: chat
+    render(conn, "show.html", chat: chat)
   end
 end

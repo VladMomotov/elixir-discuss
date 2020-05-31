@@ -3,7 +3,7 @@ defmodule Discuss.Repo.Migrations.AddChatIdInMessage do
 
   def change do
     alter table("assistant_chat_messages") do
-      add :chat_id, references("assistant_chats")
+      add(:chat_id, references("assistant_chats"))
     end
   end
 end
