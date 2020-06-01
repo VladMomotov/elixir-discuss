@@ -44,8 +44,9 @@ defmodule Discuss.AssistantChatTest do
     test "list_assistant_chat_messages/0 returns all assistant_chat_messages" do
       message = message_fixture()
 
-
-      assert AssistantChat.list_assistant_chat_messages() |> Discuss.Repo.preload(:sender) == [message]
+      assert AssistantChat.list_assistant_chat_messages() |> Discuss.Repo.preload(:sender) == [
+               message
+             ]
     end
 
     test "get_message!/1 returns the message with given id" do
@@ -57,7 +58,9 @@ defmodule Discuss.AssistantChatTest do
       chat = chat_fixture()
       sender = user_fixture()
 
-      assert {:ok, %Message{} = message} = AssistantChat.create_message(chat, sender, @valid_attrs)
+      assert {:ok, %Message{} = message} =
+               AssistantChat.create_message(chat, sender, @valid_attrs)
+
       assert message.content == "some content"
       assert message.receiver_id == 42
       assert message.sender_id == sender.id
