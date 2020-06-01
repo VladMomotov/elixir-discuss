@@ -69,7 +69,7 @@ defmodule Discuss.AssistantChat do
 
   """
   def create_message(chat, sender, attrs \\ %{}) do
-    attrs = Map.put(attrs, :sender_id, sender.id)
+    attrs = Map.put(attrs, :sender, sender)
 
     chat
     |> build_assoc(:messages, attrs)
@@ -166,7 +166,7 @@ defmodule Discuss.AssistantChat do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_chat(creator, attrs \\ %{}) do
+  def create_chat(%User{} = creator, attrs \\ %{}) do
     creator
     |> build_assoc(:assistant_chat, attrs)
     |> Repo.insert()
