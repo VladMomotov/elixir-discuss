@@ -14,7 +14,7 @@ config :discuss, DiscussWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "qF6QP8AVmedLR7TvRy65HTZJActkG8GKySRsDbUKVWdivf3ZulrdJ+su4vSeCZTp",
   render_errors: [view: DiscussWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: Discuss.PubSub
+  pubsub_server: Discuss.PubSub
 
 # Configures Elixir's Logger
 config :logger, :console,
