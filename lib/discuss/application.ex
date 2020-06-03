@@ -10,6 +10,8 @@ defmodule Discuss.Application do
   def start(_type, _args) do
     # Define workers and child supervisors to be supervised
     children = [
+      # Start the PubSub system
+      {Phoenix.PubSub, name: Discuss.PubSub},
       # Start the Ecto repository
       Discuss.Repo,
       # Start the endpoint when the application starts
