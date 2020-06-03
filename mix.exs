@@ -50,7 +50,8 @@ defmodule Discuss.Mixfile do
       {:paginator, git: "https://github.com/duffelhq/paginator.git", branch: "master"},
       {:mox, "~> 0.5", only: :test},
       {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 1.0", only: [:dev], runtime: false}
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
+      {:ex_machina, "~> 2.4", only: [:test]},
     ]
   end
 

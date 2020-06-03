@@ -21,6 +21,7 @@ defmodule Discuss.AssistantChat.Message do
   @doc false
   def changeset(message, attrs) do
     message
+    |> Discuss.Repo.preload(:sender)
     |> cast(attrs, [:receiver_id, :content, :was_viewed])
     |> cast_assoc(:sender, required: true)
     |> validate_required([:content, :was_viewed])

@@ -42,8 +42,8 @@ defmodule DiscussWeb.AssistantChatChannel do
     with chat <- socket.assigns.chat,
          message <- AssistantChat.get_message!(message_id) do
       if message.chat_id === chat.id do
-        AssistantChat.update_message(message, %{was_viewed: true})
-        broadcast!(socket, "assistant_chat:message_viewed", message)
+        {:ok, updated_message} = AssistantChat.update_message(message, %{was_viewed: true})
+        broadcast!(socket, "assistant_chat:message_viewed", updated_message)
         {:noreply, socket}
       end
     end
@@ -59,21 +59,11 @@ defmodule DiscussWeb.AssistantChatChannel do
     {:reply, {:ok, %{messages: messages, no_more_messages: no_more_messages}}, socket}
   end
 
-  defp take_out_messages(socket, paginator) do
-    messages = paginator.entries |> Enum.reverse()
-
-    if paginator.metadata.after == nil do
-      push(socket, "assistant_chat:no_more_messages", %{})
-    end
-
-    messages
-  end
-
   defp first_page(chat) do
     AssistantChat.list_assistant_chat_messages_query(chat)
     |> Discuss.Repo.paginate(
       cursor_fields: [{:inserted_at, :desc}, {:id, :desc}],
-      limit: 2,
+      limit: 20,
       include_total_count: true
     )
   end
@@ -84,7 +74,7 @@ defmodule DiscussWeb.AssistantChatChannel do
     AssistantChat.list_assistant_chat_messages_query(chat)
     |> Discuss.Repo.paginate(
       cursor_fields: [{:inserted_at, :desc}, {:id, :desc}],
-      limit: 2,
+      limit: 20,
       after: cursor_after,
       include_total_count: true
     )
