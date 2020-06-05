@@ -1,4 +1,8 @@
 defmodule Discuss.AssistantChat.Message do
+  @moduledoc """
+  AssistantChat.Message model
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
 

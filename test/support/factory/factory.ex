@@ -1,4 +1,7 @@
 defmodule Discuss.Factory do
+  @moduledoc """
+    Test fixtures
+  """
   use ExMachina.Ecto, repo: Discuss.Repo
 
   def user_factory do
