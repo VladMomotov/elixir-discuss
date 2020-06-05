@@ -1,4 +1,4 @@
-defmodule Discuss.ChannelCase do
+defmodule DiscussWeb.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -18,12 +18,13 @@ defmodule Discuss.ChannelCase do
   using do
     quote do
       # Import conveniences for testing with channels
-      use Phoenix.ChannelTest
+      import Phoenix.ChannelTest
 
       alias Discuss.Repo
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
+      import Discuss.Factory
 
       # The default endpoint for testing
       @endpoint DiscussWeb.Endpoint

@@ -1,5 +1,6 @@
 import { Socket } from 'phoenix'
 import JobsChannel from './jobsChannel'
+import AssistantChatChannel from './assistantChatChannel'
 
 // NOTE: The contents of this file will only be executed if
 // you uncomment its entry in "web/static/js/app.js".
@@ -97,3 +98,4 @@ const commentTemplate = (comment) => {
 
 window.createSocket = createSocket;
 window.jobsChannel = new JobsChannel(socket);
+window.assistantChatChannel = new AssistantChatChannel(socket, window.userId);

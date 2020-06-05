@@ -5,6 +5,7 @@ defmodule DiscussWeb.UserSocket do
   # channel "room:*", Discuss.RoomChannel
   channel "comments:*", DiscussWeb.CommentsChannel
   channel "jobs:*", DiscussWeb.JobsChannel
+  channel "assistant_chat:*", DiscussWeb.AssistantChatChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After

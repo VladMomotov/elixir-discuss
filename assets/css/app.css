@@ -11,3 +11,7 @@
   position: relative;
   margin-bottom: 25px;
 }
+
+.assistant-chat .message.not-viewed {
+  background-color: #b3e5fc;
+}

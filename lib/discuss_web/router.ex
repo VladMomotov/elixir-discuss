@@ -20,6 +20,9 @@ defmodule DiscussWeb.Router do
 
     resources "/topics", TopicController
     get "/", TopicController, :index
+
+    resources "/assistant_chats", AssistantChatController, only: [:index, :show]
+    get "/assistant_chat", AssistantChatController, :show
   end
 
   scope "/auth", DiscussWeb do

@@ -1,4 +1,8 @@
 defmodule GCP.Api do
+  @moduledoc """
+  Module for Google Cloud Platform REST Api
+  """
+
   @behaviour GCP.ApiBehaviour
 
   def get_token(scope \\ "https://www.googleapis.com/auth/cloud-platform") do

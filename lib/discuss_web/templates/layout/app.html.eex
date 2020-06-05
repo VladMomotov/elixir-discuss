@@ -14,6 +14,7 @@
     <script>
       <%= if @conn.assigns.user do %>
         window.userToken = "<%= Phoenix.Token.sign(DiscussWeb.Endpoint, "key", @conn.assigns.user.id) %>"
+        window.userId = <%= @conn.assigns.user.id %>
       <% end %>
     </script>
   </head>
@@ -51,6 +52,13 @@
                   })
                 }
               </script>
+            </li>
+            <li>
+              <%= if @conn.assigns[:user].is_admin do %>
+                <%= link 'Assistant chats', to: Routes.assistant_chat_path(@conn, :index) %>
+              <% else %>
+                <%= link 'Assistant chat', to: "/assistant_chat" %>
+              <% end %>
             </li>
             <li>
               <%= link 'Logout', to: Routes.auth_path(@conn, :signout) %>

@@ -24,8 +24,9 @@ defmodule DiscussWeb.ConnCase do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
+      import Discuss.Factory
 
-      import DiscussWeb.Router.Helpers
+      alias DiscussWeb.Router.Helpers, as: Routes
 
       # The default endpoint for testing
       @endpoint DiscussWeb.Endpoint

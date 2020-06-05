@@ -1,4 +1,6 @@
 import css from '../css/app.css';
+import { Application } from 'stimulus'
+import { definitionsFromContext } from 'stimulus/webpack-helpers'
 
 // Brunch automatically concatenates all files in your
 // watched paths. Those paths can be configured at
@@ -21,3 +23,9 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 import "./socket"
+
+const application = Application.start()
+const context = require.context('./controllers', true, /\.js$/)
+application.load(definitionsFromContext(context))
+
+window.$ = $; 
