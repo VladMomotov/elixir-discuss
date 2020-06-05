@@ -12,6 +12,7 @@ Supervisor.start_link(
   strategy: :one_for_one,
   name: Discuss.Supervisor
 )
+
 Ecto.Adapters.SQL.Sandbox.mode(Discuss.Repo, :manual)
 
 ExUnit.start()
